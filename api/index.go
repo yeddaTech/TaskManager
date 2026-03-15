@@ -1,11 +1,13 @@
-package handler
+package api
 
 import (
 	"net/http"
 
-	"github.com/yeddaTech/TaskManager/cmd/prod"
+	"github.com/yeddaTech/TaskManager/internals/router"
 )
 
 func Handler(w http.ResponseWriter, r *http.Request) {
-	prod.MyWebApp(w, r)
+	// Usiamo il router condiviso
+	myRouter := router.New()
+	myRouter.ServeHTTP(w, r)
 }
