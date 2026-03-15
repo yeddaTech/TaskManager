@@ -1,19 +1,17 @@
 module github.com/yeddaTech/TaskManager
 
-go 1.26.1
+go 1.24
 
 tool (
 	github.com/a-h/templ/cmd/templ
 	github.com/cortesi/modd/cmd/modd
 )
 
-require (
-	github.com/a-h/templ v0.3.1001
-	github.com/go-chi/chi/v5 v5.2.5
-)
+require github.com/go-chi/chi/v5 v5.2.5
 
 require (
 	github.com/a-h/parse v0.0.0-20250122154542-74294addb73e // indirect
+	github.com/a-h/templ v0.3.1001 // indirect
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751 // indirect
 	github.com/alecthomas/units v0.0.0-20211218093645-b94a6e3cc137 // indirect
 	github.com/andybalholm/brotli v1.1.0 // indirect
