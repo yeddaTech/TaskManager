@@ -16,6 +16,31 @@ func pageHandle(w http.ResponseWriter, r *http.Request) {
 func main() {
 	r := chi.NewRouter()
 	r.Get("/", pageHandle)
+	r.Get("/dashboard", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Add("Content-Type", "text/html; charset=utf-8")
+		templates.Dashboard().Render(r.Context(), w)
+	})
+
+	// NUOVE ROTTE:
+	r.Get("/login", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Add("Content-Type", "text/html; charset=utf-8")
+		templates.Login().Render(r.Context(), w)
+	})
+
+	r.Get("/register", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Add("Content-Type", "text/html; charset=utf-8")
+		templates.Register().Render(r.Context(), w)
+	})
+
+	r.Get("/work", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Add("Content-Type", "text/html; charset=utf-8")
+		templates.Work().Render(r.Context(), w)
+	})
+
+	r.Get("/profile", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Add("Content-Type", "text/html; charset=utf-8")
+		templates.Profile().Render(r.Context(), w)
+	})
 
 	fs := http.FileServer(http.Dir("public/dist"))
 	r.Handle("/dist/*", http.StripPrefix("/dist/", fs))
