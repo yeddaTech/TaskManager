@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "watch": "npx @tailwindcss/cli -i assets/src/style.css -o assets/dist/style.css --watch=always",
+    "build": "npx @tailwindcss/cli -i assets/src/style.css -o assets/dist/style.css --minify"
   },
   "keywords": [],
   "author": "",
