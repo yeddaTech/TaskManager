@@ -17,8 +17,8 @@ func main() {
 	r := chi.NewRouter()
 	r.Get("/", pageHandle)
 
-	fs := http.Dir("./assets/dist")
-	r.Handle("/assets/*", http.StripPrefix("/assets", http.FileServer(fs)))
+	fs := http.FileServer(http.Dir("public/dist"))
+	r.Handle("/dist/*", http.StripPrefix("/dist/", fs))
 
 	log.Println("Listening on :8080")
 	log.Fatal(http.ListenAndServe(":8080", r))
