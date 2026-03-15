@@ -1,4 +1,5 @@
 [tools]
 go = "latest"
+"go:github.com/a-h/templ/cmd/templ" = "latest"
 node = "lts"
 "npm:pnpm" = "latest"
