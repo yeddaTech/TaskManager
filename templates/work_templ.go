@@ -8,10 +8,7 @@ package templates
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-import (
-	"github.com/yeddaTech/TaskManager/internals/models"
-	"strconv"
-)
+import "github.com/yeddaTech/TaskManager/internals/models"
 
 func Work(task models.Task, isLoggedIn bool) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
@@ -46,52 +43,26 @@ func Work(task models.Task, isLoggedIn bool) templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"max-w-4xl mx-auto px-4 py-12\"><h1 class=\"text-5xl font-black uppercase border-b-8 border-black pb-4 mb-12\">Focus Mode</h1><div class=\"bg-cyan-300 border-4 border-black p-8 md:p-16 shadow-[16px_16px_0px_0px_rgba(0,0,0,1)] text-center mb-12\"><div class=\"inline-block bg-black text-white px-4 py-1 font-bold uppercase mb-6 -rotate-2 border-2 border-black\">Task in corso</div><h2 class=\"text-3xl md:text-5xl font-black uppercase mb-10 leading-tight\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"max-w-4xl mx-auto px-4 py-8 md:py-12\"><h1 class=\"text-4xl md:text-5xl font-black uppercase border-b-8 border-black pb-4 mb-8 md:mb-12\">Focus Mode</h1><div class=\"bg-cyan-300 border-4 border-black p-6 md:p-12 shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] text-center mb-12\"><div class=\"inline-block bg-black text-white px-4 py-1 font-bold uppercase mb-6 -rotate-2 border-2 border-black\">Task in corso</div><h2 class=\"text-3xl md:text-5xl font-black uppercase mb-8 leading-tight break-words\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var3 string
 			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(task.Title)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/work.templ`, Line: 17, Col: 32}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/work.templ`, Line: 14, Col: 32}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</h2><p class=\"font-black uppercase mb-4 text-xl italic\">Scade il: ")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			var templ_7745c5c3_Var4 string
-			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(task.Deadline.Format("02/01/2006"))
-			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/work.templ`, Line: 21, Col: 66}
-			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</p><div id=\"timer-display\" class=\"text-7xl md:text-9xl font-black tracking-tighter bg-white border-8 border-black inline-block px-8 py-4 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] mb-12\">25:00</div><div class=\"flex flex-col sm:flex-row justify-center gap-6\"><button class=\"bg-black text-white font-black uppercase text-2xl py-4 px-12 border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-y-1 hover:translate-x-1 hover:shadow-none hover:bg-green-400 hover:text-black transition-all\">START</button><form action=\"")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			var templ_7745c5c3_Var5 templ.SafeURL
-			templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinURLErrs(templ.SafeURL("/tasks/complete/" + strconv.Itoa(task.ID)))
-			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/work.templ`, Line: 33, Col: 92}
-			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "\" method=\"POST\"><button type=\"submit\" class=\"bg-white text-black font-black uppercase text-2xl py-4 px-12 border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-y-1 hover:translate-x-1 hover:shadow-none transition-all\">FINITO</button></form></div></div></div><script>\n            let seconds = 25 * 60;\n            let running = false;\n            const display = document.getElementById(\"timer-display\");\n\n            document.querySelectorAll('button').forEach(btn => {\n                if(btn.innerText === \"START\") {\n                    btn.onclick = () => {\n                        if(!running) {\n                            running = true;\n                            const interval = setInterval(() => {\n                                seconds--;\n                                let m = Math.floor(seconds/60);\n                                let s = seconds%60;\n                                display.innerText = `${m}:${s<10?'0':''}${s}`;\n                                if(seconds <= 0) clearInterval(interval);\n                            }, 1000);\n                        }\n                    }\n                }\n            });\n        </script>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</h2><div class=\"bg-white border-8 border-black p-6 mb-12 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] max-w-lg mx-auto\"><div id=\"timer-display\" class=\"text-7xl md:text-9xl font-black tracking-tighter mb-6 transition-colors duration-300\">25:00</div><div class=\"flex flex-wrap justify-center gap-2 mb-8\"><button id=\"btn-25\" class=\"bg-yellow-300 border-2 border-black font-bold uppercase px-4 py-2 touch-manipulation hover:bg-black hover:text-white active:translate-y-1 active:translate-x-1 transition-all\">🍅 25 Min</button> <button id=\"btn-5\" class=\"bg-blue-300 border-2 border-black font-bold uppercase px-4 py-2 touch-manipulation hover:bg-black hover:text-white active:translate-y-1 active:translate-x-1 transition-all\">☕ 5 Min</button> <button id=\"btn-add\" class=\"bg-green-300 border-2 border-black font-bold uppercase px-4 py-2 touch-manipulation hover:bg-black hover:text-white active:translate-y-1 active:translate-x-1 transition-all\">➕ 1 Min</button></div><div class=\"flex flex-col sm:flex-row justify-center gap-4\"><button id=\"btn-start\" class=\"w-full sm:w-auto bg-black text-white font-black uppercase text-xl py-3 px-8 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] touch-manipulation active:translate-y-1 active:translate-x-1 active:shadow-none transition-all cursor-pointer\">START</button> <button id=\"btn-pause\" class=\"w-full sm:w-auto bg-gray-200 text-black font-black uppercase text-xl py-3 px-8 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] touch-manipulation active:translate-y-1 active:translate-x-1 active:shadow-none transition-all cursor-pointer hidden\">PAUSA</button> <button id=\"btn-reset\" class=\"w-full sm:w-auto bg-red-400 text-black font-black uppercase text-xl py-3 px-8 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] touch-manipulation active:translate-y-1 active:translate-x-1 active:shadow-none transition-all cursor-pointer\">RESET</button></div></div><a href=\"/dashboard\" class=\"inline-block bg-white text-black font-black uppercase text-xl py-4 px-8 border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] touch-manipulation hover:bg-gray-100 active:translate-y-1 active:translate-x-1 active:shadow-none transition-all\">← Torna alla Dashboard</a></div></div><script>\n            let totalSeconds = 25 * 60;\n            let currentSeconds = totalSeconds;\n            let timerInterval = null;\n            let isRunning = false;\n\n            const display = document.getElementById(\"timer-display\");\n            const btnStart = document.getElementById(\"btn-start\");\n            const btnPause = document.getElementById(\"btn-pause\");\n            const btnReset = document.getElementById(\"btn-reset\");\n\n            function updateDisplay() {\n                let m = Math.floor(currentSeconds / 60);\n                let s = currentSeconds % 60;\n                display.innerText = `${m}:${s < 10 ? '0' : ''}${s}`;\n            }\n\n            function setTimer(minutes) {\n                if(isRunning) toggleTimer();\n                totalSeconds = minutes * 60;\n                currentSeconds = totalSeconds;\n                updateDisplay();\n                display.classList.remove('text-red-600');\n            }\n\n            function toggleTimer() {\n                if (isRunning) {\n                    clearInterval(timerInterval);\n                    btnStart.classList.remove('hidden');\n                    btnPause.classList.add('hidden');\n                } else {\n                    if(currentSeconds <= 0) return;\n                    btnStart.classList.add('hidden');\n                    btnPause.classList.remove('hidden');\n                    display.classList.remove('text-red-600');\n                    \n                    timerInterval = setInterval(() => {\n                        currentSeconds--;\n                        updateDisplay();\n                        if (currentSeconds <= 0) {\n                            clearInterval(timerInterval);\n                            btnStart.classList.remove('hidden');\n                            btnPause.classList.add('hidden');\n                            isRunning = false;\n                            display.classList.add('text-red-600');\n                        }\n                    }, 1000);\n                }\n                isRunning = !isRunning;\n            }\n\n            document.getElementById('btn-25').onclick = () => setTimer(25);\n            document.getElementById('btn-5').onclick = () => setTimer(5);\n            document.getElementById('btn-add').onclick = () => { setTimer(Math.floor(currentSeconds / 60) + 1); };\n            btnStart.onclick = toggleTimer;\n            btnPause.onclick = toggleTimer;\n            btnReset.onclick = () => {\n                if(isRunning) toggleTimer();\n                currentSeconds = totalSeconds;\n                updateDisplay();\n                display.classList.remove('text-red-600');\n            };\n\n            updateDisplay();\n        </script>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			return nil
 		})
-		templ_7745c5c3_Err = Layout("Work - Task Manager", isLoggedIn).Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = Layout("Focus Mode - Task Manager", isLoggedIn).Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

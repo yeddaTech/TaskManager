@@ -1,62 +1,109 @@
 package templates
 
-import (
-    "strconv"
-    "github.com/yeddaTech/TaskManager/internals/models"
-)
+import "github.com/yeddaTech/TaskManager/internals/models"
 
 templ Work(task models.Task, isLoggedIn bool) {
-    @Layout("Work - Task Manager", isLoggedIn) {
-        <div class="max-w-4xl mx-auto px-4 py-12">
-            <h1 class="text-5xl font-black uppercase border-b-8 border-black pb-4 mb-12">Focus Mode</h1>
+    @Layout("Focus Mode - Task Manager", isLoggedIn) {
+        <div class="max-w-4xl mx-auto px-4 py-8 md:py-12">
+            <h1 class="text-4xl md:text-5xl font-black uppercase border-b-8 border-black pb-4 mb-8 md:mb-12">Focus Mode</h1>
             
-            <div class="bg-cyan-300 border-4 border-black p-8 md:p-16 shadow-[16px_16px_0px_0px_rgba(0,0,0,1)] text-center mb-12">
+            <div class="bg-cyan-300 border-4 border-black p-6 md:p-12 shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] text-center mb-12">
                 <div class="inline-block bg-black text-white px-4 py-1 font-bold uppercase mb-6 -rotate-2 border-2 border-black">Task in corso</div>
                 
-                <h2 class="text-3xl md:text-5xl font-black uppercase mb-10 leading-tight">
+                <h2 class="text-3xl md:text-5xl font-black uppercase mb-8 leading-tight break-words">
                     { task.Title }
                 </h2>
                 
-                <p class="font-black uppercase mb-4 text-xl italic">
-                    Scade il: { task.Deadline.Format("02/01/2006") }
-                </p>
-                
-                // AGGIUNTO L'ID AL TIMER COSÌ IL JAVASCRIPT LO TROVA
-                <div id="timer-display" class="text-7xl md:text-9xl font-black tracking-tighter bg-white border-8 border-black inline-block px-8 py-4 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] mb-12">
-                    25:00
-                </div>
-                
-                <div class="flex flex-col sm:flex-row justify-center gap-6">
-                    <button class="bg-black text-white font-black uppercase text-2xl py-4 px-12 border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-y-1 hover:translate-x-1 hover:shadow-none hover:bg-green-400 hover:text-black transition-all">START</button>
+                // IL TIMER (Puro e semplice)
+                <div class="bg-white border-8 border-black p-6 mb-12 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] max-w-lg mx-auto">
+                    <div id="timer-display" class="text-7xl md:text-9xl font-black tracking-tighter mb-6 transition-colors duration-300">
+                        25:00
+                    </div>
+
+                    <div class="flex flex-wrap justify-center gap-2 mb-8">
+                        <button id="btn-25" class="bg-yellow-300 border-2 border-black font-bold uppercase px-4 py-2 touch-manipulation hover:bg-black hover:text-white active:translate-y-1 active:translate-x-1 transition-all">🍅 25 Min</button>
+                        <button id="btn-5" class="bg-blue-300 border-2 border-black font-bold uppercase px-4 py-2 touch-manipulation hover:bg-black hover:text-white active:translate-y-1 active:translate-x-1 transition-all">☕ 5 Min</button>
+                        <button id="btn-add" class="bg-green-300 border-2 border-black font-bold uppercase px-4 py-2 touch-manipulation hover:bg-black hover:text-white active:translate-y-1 active:translate-x-1 transition-all">➕ 1 Min</button>
+                    </div>
                     
-                    // CORRETTO IL METODO PER CONVERTIRE L'ID IN STRINGA
-                    <form action={ templ.SafeURL("/tasks/complete/" + strconv.Itoa(task.ID)) } method="POST">
-                        <button type="submit" class="bg-white text-black font-black uppercase text-2xl py-4 px-12 border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-y-1 hover:translate-x-1 hover:shadow-none transition-all">FINITO</button>
-                    </form>
+                    <div class="flex flex-col sm:flex-row justify-center gap-4">
+                        <button id="btn-start" class="w-full sm:w-auto bg-black text-white font-black uppercase text-xl py-3 px-8 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] touch-manipulation active:translate-y-1 active:translate-x-1 active:shadow-none transition-all cursor-pointer">START</button>
+                        <button id="btn-pause" class="w-full sm:w-auto bg-gray-200 text-black font-black uppercase text-xl py-3 px-8 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] touch-manipulation active:translate-y-1 active:translate-x-1 active:shadow-none transition-all cursor-pointer hidden">PAUSA</button>
+                        <button id="btn-reset" class="w-full sm:w-auto bg-red-400 text-black font-black uppercase text-xl py-3 px-8 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] touch-manipulation active:translate-y-1 active:translate-x-1 active:shadow-none transition-all cursor-pointer">RESET</button>
+                    </div>
                 </div>
+                
+                // TASTO PER USCIRE DAL TIMER
+                <a href="/dashboard" class="inline-block bg-white text-black font-black uppercase text-xl py-4 px-8 border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] touch-manipulation hover:bg-gray-100 active:translate-y-1 active:translate-x-1 active:shadow-none transition-all">
+                    ← Torna alla Dashboard
+                </a>
             </div>
         </div>
-        <script>
-            let seconds = 25 * 60;
-            let running = false;
-            const display = document.getElementById("timer-display");
 
-            document.querySelectorAll('button').forEach(btn => {
-                if(btn.innerText === "START") {
-                    btn.onclick = () => {
-                        if(!running) {
-                            running = true;
-                            const interval = setInterval(() => {
-                                seconds--;
-                                let m = Math.floor(seconds/60);
-                                let s = seconds%60;
-                                display.innerText = `${m}:${s<10?'0':''}${s}`;
-                                if(seconds <= 0) clearInterval(interval);
-                            }, 1000);
+        <script>
+            let totalSeconds = 25 * 60;
+            let currentSeconds = totalSeconds;
+            let timerInterval = null;
+            let isRunning = false;
+
+            const display = document.getElementById("timer-display");
+            const btnStart = document.getElementById("btn-start");
+            const btnPause = document.getElementById("btn-pause");
+            const btnReset = document.getElementById("btn-reset");
+
+            function updateDisplay() {
+                let m = Math.floor(currentSeconds / 60);
+                let s = currentSeconds % 60;
+                display.innerText = `${m}:${s < 10 ? '0' : ''}${s}`;
+            }
+
+            function setTimer(minutes) {
+                if(isRunning) toggleTimer();
+                totalSeconds = minutes * 60;
+                currentSeconds = totalSeconds;
+                updateDisplay();
+                display.classList.remove('text-red-600');
+            }
+
+            function toggleTimer() {
+                if (isRunning) {
+                    clearInterval(timerInterval);
+                    btnStart.classList.remove('hidden');
+                    btnPause.classList.add('hidden');
+                } else {
+                    if(currentSeconds <= 0) return;
+                    btnStart.classList.add('hidden');
+                    btnPause.classList.remove('hidden');
+                    display.classList.remove('text-red-600');
+                    
+                    timerInterval = setInterval(() => {
+                        currentSeconds--;
+                        updateDisplay();
+                        if (currentSeconds <= 0) {
+                            clearInterval(timerInterval);
+                            btnStart.classList.remove('hidden');
+                            btnPause.classList.add('hidden');
+                            isRunning = false;
+                            display.classList.add('text-red-600');
                         }
-                    }
+                    }, 1000);
                 }
-            });
+                isRunning = !isRunning;
+            }
+
+            document.getElementById('btn-25').onclick = () => setTimer(25);
+            document.getElementById('btn-5').onclick = () => setTimer(5);
+            document.getElementById('btn-add').onclick = () => { setTimer(Math.floor(currentSeconds / 60) + 1); };
+            btnStart.onclick = toggleTimer;
+            btnPause.onclick = toggleTimer;
+            btnReset.onclick = () => {
+                if(isRunning) toggleTimer();
+                currentSeconds = totalSeconds;
+                updateDisplay();
+                display.classList.remove('text-red-600');
+            };
+
+            updateDisplay();
         </script>
     }
 }
