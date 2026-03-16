@@ -18,7 +18,10 @@ func New() *chi.Mux {
 	}
 
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
-		templates.Index(isLogged(r)).Render(r.Context(), w)
+		// Contiamo gli utenti
+		count := handlers.GetUserCount()
+		// Passiamo sia il login che il conteggio al template!
+		templates.Index(isLogged(r), count).Render(r.Context(), w)
 	})
 
 	r.Get("/dashboard", func(w http.ResponseWriter, r *http.Request) {
@@ -52,6 +55,13 @@ func New() *chi.Mux {
 	r.Get("/tasks/new", func(w http.ResponseWriter, r *http.Request) {
 		templates.NewTask(isLogged(r)).Render(r.Context(), w)
 	})
+
+	// DA COSÌ:
+	// r.Get("/", func(w http.ResponseWriter, r *http.Request) {
+	//     templates.Index(isLogged(r)).Render(r.Context(), w)
+	// })
+
+	// A COSÌ:
 
 	// GESTIONE AZIONI (POST)
 	r.Post("/register", handlers.PostRegister)

@@ -71,3 +71,14 @@ func PostLogout(w http.ResponseWriter, r *http.Request) {
 
 	http.Redirect(w, r, "/login", http.StatusSeeOther)
 }
+
+// Aggiungi questo in fondo al file auth.go
+func GetUserCount() int {
+	var count int
+	// Chiediamo al database di contare tutte le righe nella tabella users
+	err := db.Pool.QueryRow(context.Background(), "SELECT COUNT(*) FROM users").Scan(&count)
+	if err != nil {
+		return 0 // Se c'è un errore, mostriamo 0 per non far crashare nulla
+	}
+	return count
+}

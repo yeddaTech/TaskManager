@@ -1,8 +1,9 @@
 package templates
 
-// 1. AGGIUNTO isLoggedIn bool
-templ Index(isLoggedIn bool) {
-    // 2. SOSTITUITO "false" CON isLoggedIn
+import "strconv" // <-- AGGIUNGI QUESTO IMPORT
+
+// Aggiungiamo userCount int tra le parentesi
+templ Index(isLoggedIn bool, userCount int) { 
     @Layout("Task Manager", isLoggedIn) {
         
         // 1. HERO SECTION
@@ -30,7 +31,8 @@ templ Index(isLoggedIn bool) {
             </div>
 
             <p class="mt-8 text-sm font-bold text-gray-600">
-                Già usato da <span class="text-black underline decoration-2 underline-offset-4">0</span> procrastinatori pentiti.
+                // ECCO LA MAGIA: { strconv.Itoa(userCount) }
+                Già usato da <span class="text-black underline decoration-2 underline-offset-4">{ strconv.Itoa(userCount) }</span> procrastinatori pentiti.
             </p>
         </section>
         
