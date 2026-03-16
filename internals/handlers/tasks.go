@@ -85,3 +85,21 @@ func GetUserFromDB(r *http.Request) models.User {
 	db.Pool.QueryRow(r.Context(), "SELECT id, username, email FROM users WHERE id = $1", cookie.Value).Scan(&u.ID, &u.Username, &u.Email)
 	return u
 }
+func PostStartTask(w http.ResponseWriter, r *http.Request) {
+	// 1. Prendiamo l'ID del task dall'URL (es: /tasks/start/5)
+	taskID := chi.URLParam(r, "id")
+
+	// 2. Diciamo al database di aggiornare lo stato
+	_, err := db.Pool.Exec(context.Background(),
+		"UPDATE tasks SET status = 'doing' WHERE id = $1",
+		taskID,
+	)
+
+	if err != nil {
+		http.Error(w, "Errore nell'avvio del task", http.StatusInternalServerError)
+		return
+	}
+
+	// 3. Ricarichiamo la pagina della Dashboard per vedere la magia
+	http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
+}

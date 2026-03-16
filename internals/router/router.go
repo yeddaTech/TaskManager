@@ -59,6 +59,7 @@ func New() *chi.Mux {
 	r.Post("/logout", handlers.PostLogout)
 	r.Post("/tasks", handlers.PostTask)
 	r.Post("/tasks/complete/{id}", handlers.PostCompleteTask)
+	r.Post("/tasks/start/{id}", handlers.PostStartTask)
 
 	return r
 }
