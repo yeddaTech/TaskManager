@@ -8,7 +8,8 @@ package templates
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-func Layout(title string) templ.Component {
+// Aggiungiamo isLoggedIn bool
+func Layout(title string, isLoggedIn bool) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -36,13 +37,28 @@ func Layout(title string) templ.Component {
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(title)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/layout.templ`, Line: 10, Col: 22}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/layout.templ`, Line: 11, Col: 22}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</title></head><body class=\"bg-amber-100 text-gray-900 font-sans selection:bg-pink-400 selection:text-black\"><header class=\"flex flex-wrap sm:justify-start sm:flex-nowrap w-full py-4 bg-white border-b-4 border-black sticky top-0 z-50\"><nav class=\"max-w-[85rem] w-full mx-auto px-4 sm:px-6 flex flex-wrap basis-full items-center justify-between\"><a class=\"sm:order-1 flex-none text-2xl font-black uppercase tracking-tighter bg-yellow-300 px-3 py-1 border-2 border-black -rotate-2 hover:rotate-0 transition-transform shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]\" href=\"/\">Task Manager</a><div class=\"sm:order-3 flex items-center gap-x-4\"><button type=\"button\" class=\"sm:hidden hs-collapse-toggle relative size-10 flex justify-center items-center bg-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-yellow-300 hover:translate-y-1 hover:translate-x-1 hover:shadow-none transition-all\" id=\"hs-navbar-alignment-collapse\" aria-expanded=\"false\" aria-controls=\"hs-navbar-alignment\" aria-label=\"Toggle navigation\" data-hs-collapse=\"#hs-navbar-alignment\"><svg class=\"hs-collapse-open:hidden shrink-0 size-6\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"3\" x2=\"21\" y1=\"6\" y2=\"6\"></line><line x1=\"3\" x2=\"21\" y1=\"12\" y2=\"12\"></line><line x1=\"3\" x2=\"21\" y1=\"18\" y2=\"18\"></line></svg> <svg class=\"hs-collapse-open:block hidden shrink-0 size-6\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M18 6 6 18\"></path><path d=\"m6 6 12 12\"></path></svg> <span class=\"sr-only\">Toggle</span></button><a href=\"/login\" class=\"py-2 px-6 inline-flex items-center text-sm font-black uppercase bg-white border-2 border-black text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-pink-400 hover:translate-y-1 hover:translate-x-1 hover:shadow-none transition-all\">Login</a></div><div id=\"hs-navbar-alignment\" class=\"hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow sm:grow-0 sm:basis-auto sm:block sm:order-2\" aria-labelledby=\"hs-navbar-alignment-collapse\" role=\"region\"><div class=\"flex flex-col gap-4 mt-6 sm:flex-row sm:items-center sm:mt-0 sm:ps-8\"><a class=\"text-sm font-black uppercase px-3 py-2 border-2 border-transparent hover:border-black hover:bg-cyan-300 transition-all\" href=\"/\" aria-current=\"page\">Landing</a> <a class=\"text-sm font-black uppercase px-3 py-2 border-2 border-transparent hover:border-black hover:bg-cyan-300 transition-all\" href=\"/dashboard\">Dashboard</a> <a class=\"text-sm font-black uppercase px-3 py-2 border-2 border-transparent hover:border-black hover:bg-cyan-300 transition-all\" href=\"/work\">Work</a> <a class=\"text-sm font-black uppercase px-3 py-2 border-2 border-transparent hover:border-black hover:bg-cyan-300 transition-all\" href=\"/profile\">Profile</a></div></div></nav></header><main class=\"min-h-screen\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</title></head><body class=\"bg-amber-100 text-gray-900 font-sans selection:bg-pink-400 selection:text-black\"><header class=\"flex flex-wrap sm:justify-start sm:flex-nowrap w-full py-4 bg-white border-b-4 border-black sticky top-0 z-50\"><nav class=\"max-w-[85rem] w-full mx-auto px-4 sm:px-6 flex flex-wrap basis-full items-center justify-between\"><a class=\"sm:order-1 flex-none text-2xl font-black uppercase tracking-tighter bg-yellow-300 px-3 py-1 border-2 border-black -rotate-2 hover:rotate-0 transition-transform shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]\" href=\"/\">Task Manager</a><div class=\"sm:order-3 flex items-center gap-x-4\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		if isLoggedIn {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<form action=\"/logout\" method=\"POST\" class=\"inline\"><button type=\"submit\" class=\"py-2 px-6 inline-flex items-center text-sm font-black uppercase bg-red-500 border-2 border-black text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-y-1 hover:translate-x-1 hover:shadow-none transition-all\">Logout</button></form>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		} else {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<a href=\"/login\" class=\"py-2 px-6 inline-flex items-center text-sm font-black uppercase bg-white border-2 border-black text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-pink-400 hover:translate-y-1 hover:translate-x-1 hover:shadow-none transition-all\">Login</a>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</div><div id=\"hs-navbar-alignment\" class=\"hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow sm:grow-0 sm:basis-auto sm:block sm:order-2\"><div class=\"flex flex-col gap-4 mt-6 sm:flex-row sm:items-center sm:mt-0 sm:ps-8\"><a class=\"text-sm font-black uppercase px-3 py-2 border-2 border-transparent hover:border-black hover:bg-cyan-300 transition-all\" href=\"/\">Landing</a> <a class=\"text-sm font-black uppercase px-3 py-2 border-2 border-transparent hover:border-black hover:bg-cyan-300 transition-all\" href=\"/dashboard\">Dashboard</a> <a class=\"text-sm font-black uppercase px-3 py-2 border-2 border-transparent hover:border-black hover:bg-cyan-300 transition-all\" href=\"/work\">Work</a> <a class=\"text-sm font-black uppercase px-3 py-2 border-2 border-transparent hover:border-black hover:bg-cyan-300 transition-all\" href=\"/profile\">Profile</a></div></div></nav></header><main class=\"min-h-screen\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -50,7 +66,7 @@ func Layout(title string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</main></body></html>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</main></body></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

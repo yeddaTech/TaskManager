@@ -2,8 +2,10 @@ package templates
 
 import "github.com/yeddaTech/TaskManager/internals/models"
 
-templ Profile(u models.User) {
-    @Layout("Profilo - Task Manager") {
+// 1. AGGIUNTO isLoggedIn bool
+templ Profile(u models.User, isLoggedIn bool) {
+    // 2. SOSTITUITO "true" CON isLoggedIn
+    @Layout("Profilo - Task Manager", isLoggedIn) {
         <div class="max-w-4xl mx-auto px-4 py-12">
             <h1 class="text-5xl font-black uppercase border-b-8 border-black pb-4 mb-12">Il tuo Profilo</h1>
             

@@ -1,7 +1,7 @@
 package templates
 
-templ Login() {
-    @Layout("Accedi - Task Manager") {
+templ Login(isLoggedIn bool) {
+    @Layout("Accedi - Task Manager", isLoggedIn) {
         <div class="min-h-[75vh] flex items-center justify-center px-4 py-12">
             <div class="bg-white border-4 border-black p-8 w-full max-w-md shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]">
                 <h1 class="text-4xl font-black uppercase mb-2 text-center">Bentornato</h1>

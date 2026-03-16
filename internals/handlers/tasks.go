@@ -5,19 +5,22 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/go-chi/chi/v5"
 	"github.com/yeddaTech/TaskManager/internals/db"
+	"github.com/yeddaTech/TaskManager/internals/models"
 )
 
+// Crea un nuovo task
 func PostTask(w http.ResponseWriter, r *http.Request) {
 	cookie, _ := r.Cookie("user_id")
 	title := r.FormValue("title")
 	desc := r.FormValue("description")
-	deadlineStr := r.FormValue("deadline") // Formato input date: 2026-03-25
+	deadlineStr := r.FormValue("deadline")
 
 	deadline, _ := time.Parse("2006-01-02", deadlineStr)
 
 	_, err := db.Pool.Exec(context.Background(),
-		"INSERT INTO tasks (user_id, title, description, deadline) VALUES ($1, $2, $3, $4)",
+		"INSERT INTO tasks (user_id, title, description, deadline, status) VALUES ($1, $2, $3, $4, 'pending')",
 		cookie.Value, title, desc, deadline)
 
 	if err != nil {
@@ -25,4 +28,60 @@ func PostTask(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
+}
+
+// Completa un task (Tasto FINE)
+func PostCompleteTask(w http.ResponseWriter, r *http.Request) {
+	taskID := chi.URLParam(r, "id")
+	_, err := db.Pool.Exec(context.Background(), "UPDATE tasks SET status = 'completed' WHERE id = $1", taskID)
+	if err != nil {
+		http.Error(w, "Errore update", http.StatusInternalServerError)
+		return
+	}
+	http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
+}
+
+// Prende i task per la Dashboard
+func GetTasksFromDB(r *http.Request) []models.Task {
+	cookie, err := r.Cookie("user_id")
+	if err != nil {
+		return nil
+	}
+
+	rows, err := db.Pool.Query(r.Context(), "SELECT id, title, description, status, deadline FROM tasks WHERE user_id = $1", cookie.Value)
+	if err != nil {
+		return nil
+	}
+	defer rows.Close()
+
+	var tasks []models.Task
+	for rows.Next() {
+		var t models.Task
+		rows.Scan(&t.ID, &t.Title, &t.Description, &t.Status, &t.Deadline)
+		tasks = append(tasks, t)
+	}
+	return tasks
+}
+
+// Prende il task attivo per la pagina Work
+func GetActiveTaskFromDB(r *http.Request) models.Task {
+	cookie, err := r.Cookie("user_id")
+	var t models.Task
+	if err != nil {
+		return t
+	}
+
+	db.Pool.QueryRow(r.Context(), "SELECT id, title, deadline FROM tasks WHERE user_id = $1 AND status != 'completed' LIMIT 1", cookie.Value).Scan(&t.ID, &t.Title, &t.Deadline)
+	return t
+}
+
+// Prende l'utente per il Profilo
+func GetUserFromDB(r *http.Request) models.User {
+	cookie, err := r.Cookie("user_id")
+	var u models.User
+	if err != nil {
+		return u
+	}
+	db.Pool.QueryRow(r.Context(), "SELECT id, username, email FROM users WHERE id = $1", cookie.Value).Scan(&u.ID, &u.Username, &u.Email)
+	return u
 }

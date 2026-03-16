@@ -1,7 +1,8 @@
 package templates
 
-templ Register() {
-    @Layout("Registrati - Task Manager") {
+templ Register(isLoggedIn bool) {
+    // ECCO LA CORREZIONE: usiamo la variabile isLoggedIn invece di "false"
+    @Layout("Registrati - Task Manager", isLoggedIn) {
         <div class="min-h-[75vh] flex items-center justify-center px-4 py-12">
             <div class="bg-yellow-300 border-4 border-black p-8 w-full max-w-md shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]">
                 <h1 class="text-4xl font-black uppercase mb-2 text-center">Unisciti</h1>
