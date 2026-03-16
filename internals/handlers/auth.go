@@ -3,6 +3,7 @@ package handlers
 import (
 	"context"
 	"net/http"
+	"strconv" // <-- AGGIUNTO PER CONVERTIRE I NUMERI CORRETTAMENTE
 
 	"github.com/yeddaTech/TaskManager/internals/db"
 	"golang.org/x/crypto/bcrypt"
@@ -28,7 +29,7 @@ func PostRegister(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/login", http.StatusSeeOther)
 }
 
-// Login semplice con Cookie
+// Login
 func PostLogin(w http.ResponseWriter, r *http.Request) {
 	email := r.FormValue("email")
 	password := r.FormValue("password")
@@ -43,31 +44,30 @@ func PostLogin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Settiamo un cookie ignorante con l'ID utente (per ora va bene così)
+	// COOKIE BLINDATO PER VERCEL E CONVERSIONE ID CORRETTA
 	http.SetCookie(w, &http.Cookie{
-		Name:  "user_id",
-		Value: string(rune(id)),
-		Path:  "/",
+		Name:     "user_id",
+		Value:    strconv.Itoa(id), // <-- CORRETTO! Ora trasforma l'ID 1 nel testo "1"
+		Path:     "/",
+		HttpOnly: true,                 // Non accessibile da JavaScript
+		Secure:   true,                 // OBBLIGATORIO SU VERCEL (HTTPS)
+		SameSite: http.SameSiteLaxMode, // Permette il login senza blocchi strani
+		MaxAge:   86400 * 7,            // Dura una settimana
 	})
+
 	http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
 }
 
 // Logout
 func PostLogout(w http.ResponseWriter, r *http.Request) {
-
 	http.SetCookie(w, &http.Cookie{
-
-		Name: "user_id",
-
-		Value: "",
-
-		Path: "/",
-
-		MaxAge: -1, // Questo dice al browser di cancellare il cookie immediatamente
-
+		Name:     "user_id",
+		Value:    "",
+		Path:     "/",
+		MaxAge:   -1, // Uccide il cookie all'istante
 		HttpOnly: true,
+		Secure:   true, // Allineato con il cookie di login
 	})
 
 	http.Redirect(w, r, "/login", http.StatusSeeOther)
-
 }
