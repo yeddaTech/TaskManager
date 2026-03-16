@@ -7,16 +7,16 @@ templ Login() {
                 <h1 class="text-4xl font-black uppercase mb-2 text-center">Bentornato</h1>
                 <p class="text-center font-bold text-gray-600 mb-8">Pronto a spaccare tutto?</p>
                 
-                <form class="flex flex-col gap-6">
+                <form action="/login" method="POST" class="flex flex-col gap-6">
                     <div>
                         <label class="block text-sm font-black uppercase mb-2">Email</label>
-                        <input type="email" class="w-full border-4 border-black p-3 font-bold focus:outline-none focus:bg-yellow-200 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-colors" placeholder="boss@azienda.com" />
+                        <input type="email" name="email" required class="w-full border-4 border-black p-3 font-bold focus:outline-none focus:bg-yellow-200 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-colors" placeholder="boss@azienda.com" />
                     </div>
                     <div>
                         <label class="block text-sm font-black uppercase mb-2">Password</label>
-                        <input type="password" class="w-full border-4 border-black p-3 font-bold focus:outline-none focus:bg-yellow-200 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-colors" placeholder="********" />
+                        <input type="password" name="password" required class="w-full border-4 border-black p-3 font-bold focus:outline-none focus:bg-yellow-200 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-colors" placeholder="********" />
                     </div>
-                    <button type="button" class="mt-4 bg-black text-white font-black uppercase text-xl py-4 border-4 border-black hover:bg-transparent hover:text-black transition-all shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-y-1 hover:translate-x-1 hover:shadow-none">
+                    <button type="submit" class="mt-4 bg-black text-white font-black uppercase text-xl py-4 border-4 border-black hover:bg-transparent hover:text-black transition-all shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-y-1 hover:translate-x-1 hover:shadow-none">
                         Entra
                     </button>
                 </form>

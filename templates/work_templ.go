@@ -8,7 +8,9 @@ package templates
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-func Work() templ.Component {
+import "github.com/yeddaTech/TaskManager/internals/models"
+
+func Work(task models.Task) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -41,7 +43,46 @@ func Work() templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"max-w-4xl mx-auto px-4 py-12\"><h1 class=\"text-5xl font-black uppercase border-b-8 border-black pb-4 mb-12\">Focus Mode</h1><div class=\"bg-cyan-300 border-4 border-black p-8 md:p-16 shadow-[16px_16px_0px_0px_rgba(0,0,0,1)] text-center mb-12\"><div class=\"inline-block bg-black text-white px-4 py-1 font-bold uppercase mb-6 -rotate-2 border-2 border-black\">Task in corso</div><h2 class=\"text-3xl md:text-5xl font-black uppercase mb-10 leading-tight\">Finire il backend in Go</h2><div class=\"text-7xl md:text-9xl font-black tracking-tighter bg-white border-8 border-black inline-block px-8 py-4 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] mb-12\">25:00</div><div class=\"flex flex-col sm:flex-row justify-center gap-6\"><button class=\"bg-black text-white font-black uppercase text-2xl py-4 px-12 border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-y-1 hover:translate-x-1 hover:shadow-none hover:bg-green-400 hover:text-black transition-all\">START</button> <button class=\"bg-white text-black font-black uppercase text-2xl py-4 px-12 border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-y-1 hover:translate-x-1 hover:shadow-none transition-all\">PAUSA</button></div></div></div>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"max-w-4xl mx-auto px-4 py-12\"><h1 class=\"text-5xl font-black uppercase border-b-8 border-black pb-4 mb-12\">Focus Mode</h1><div class=\"bg-cyan-300 border-4 border-black p-8 md:p-16 shadow-[16px_16px_0px_0px_rgba(0,0,0,1)] text-center mb-12\"><div class=\"inline-block bg-black text-white px-4 py-1 font-bold uppercase mb-6 -rotate-2 border-2 border-black\">Task in corso</div><h2 class=\"text-3xl md:text-5xl font-black uppercase mb-10 leading-tight\">")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var3 string
+			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(task.Title)
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/work.templ`, Line: 15, Col: 32}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</h2><p class=\"font-black uppercase mb-4 text-xl italic\">Scade il: ")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var4 string
+			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(task.Deadline.Format("02/01/2006"))
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/work.templ`, Line: 20, Col: 66}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</p><div class=\"text-7xl md:text-9xl font-black tracking-tighter bg-white border-8 border-black inline-block px-8 py-4 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] mb-12\">25:00</div><div class=\"flex flex-col sm:flex-row justify-center gap-6\"><button class=\"bg-black text-white font-black uppercase text-2xl py-4 px-12 border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-y-1 hover:translate-x-1 hover:shadow-none hover:bg-green-400 hover:text-black transition-all\">START</button><form action=\"")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var5 templ.SafeURL
+			templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinURLErrs(templ.SafeURL("/tasks/complete/" + string(rune(task.ID))))
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/work.templ`, Line: 31, Col: 92}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "\" method=\"POST\"><button type=\"submit\" class=\"bg-white text-black font-black uppercase text-2xl py-4 px-12 border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-y-1 hover:translate-x-1 hover:shadow-none transition-all\">FINITO</button></form></div></div></div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

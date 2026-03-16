@@ -8,7 +8,9 @@ package templates
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-func Profile() templ.Component {
+import "github.com/yeddaTech/TaskManager/internals/models"
+
+func Profile(u models.User) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -41,7 +43,33 @@ func Profile() templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"max-w-4xl mx-auto px-4 py-12\"><h1 class=\"text-5xl font-black uppercase border-b-8 border-black pb-4 mb-12\">Il tuo Profilo</h1><div class=\"flex flex-col md:flex-row gap-8\"><div class=\"w-full md:w-1/3\"><div class=\"bg-pink-400 border-4 border-black aspect-square flex items-center justify-center shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] mb-6\"><span class=\"text-8xl\">🤓</span></div><button class=\"w-full bg-white text-black font-black uppercase py-3 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-y-1 hover:translate-x-1 hover:shadow-none hover:bg-black hover:text-white transition-all\">Cambia Foto</button> <button class=\"w-full mt-4 bg-red-500 text-black font-black uppercase py-3 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-y-1 hover:translate-x-1 hover:shadow-none transition-all\">Esci (Logout)</button></div><div class=\"w-full md:w-2/3 bg-white border-4 border-black p-6 md:p-10 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]\"><h2 class=\"text-2xl font-black uppercase mb-6\">Dati Personali</h2><form class=\"flex flex-col gap-6\"><div><label class=\"block font-black uppercase mb-2\">Nome</label> <input type=\"text\" value=\"Tony Wayne\" class=\"w-full border-4 border-black p-3 font-bold bg-gray-50 focus:bg-yellow-200 outline-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-colors\"></div><div><label class=\"block font-black uppercase mb-2\">Email</label> <input type=\"email\" value=\"tony@wayne.com\" class=\"w-full border-4 border-black p-3 font-bold bg-gray-50 focus:bg-yellow-200 outline-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-colors\"></div><div class=\"mt-6 pt-6 border-t-4 border-black border-dashed\"><label class=\"block font-black uppercase text-red-600 mb-2\">Nuova Password</label> <input type=\"password\" placeholder=\"Scrivi per cambiare...\" class=\"w-full border-4 border-black p-3 font-bold bg-gray-50 focus:bg-yellow-200 outline-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-colors\"></div><button type=\"button\" class=\"mt-4 bg-black text-white font-black uppercase text-lg py-4 border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-y-1 hover:translate-x-1 hover:shadow-none hover:bg-green-400 hover:text-black transition-all\">Salva Modifiche</button></form></div></div></div>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"max-w-4xl mx-auto px-4 py-12\"><h1 class=\"text-5xl font-black uppercase border-b-8 border-black pb-4 mb-12\">Il tuo Profilo</h1><div class=\"flex flex-col md:flex-row gap-8\"><div class=\"w-full md:w-1/3\"><div class=\"bg-pink-400 border-4 border-black aspect-square flex items-center justify-center shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] mb-6\"><span class=\"text-8xl\">🤓</span></div><button class=\"w-full bg-white text-black font-black uppercase py-3 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-y-1 hover:translate-x-1 hover:shadow-none hover:bg-black hover:text-white transition-all\">Cambia Foto</button><form action=\"/logout\" method=\"POST\"><button type=\"submit\" class=\"w-full mt-4 bg-red-500 text-black font-black uppercase py-3 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-y-1 hover:translate-x-1 hover:shadow-none transition-all\">Esci (Logout)</button></form></div><div class=\"w-full md:w-2/3 bg-white border-4 border-black p-6 md:p-10 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]\"><h2 class=\"text-2xl font-black uppercase mb-6\">Dati Personali</h2><form action=\"/profile/update\" method=\"POST\" class=\"flex flex-col gap-6\"><div><label class=\"block font-black uppercase mb-2\">Nome</label> <input type=\"text\" name=\"username\" value=\"")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var3 string
+			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(u.Username)
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/profile.templ`, Line: 29, Col: 81}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "\" class=\"w-full border-4 border-black p-3 font-bold bg-gray-50 focus:bg-yellow-200 outline-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-colors\"></div><div><label class=\"block font-black uppercase mb-2\">Email</label> <input type=\"email\" name=\"email\" value=\"")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var4 string
+			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(u.Email)
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/profile.templ`, Line: 33, Col: 76}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "\" class=\"w-full border-4 border-black p-3 font-bold bg-gray-50 focus:bg-yellow-200 outline-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-colors\"></div><div class=\"mt-6 pt-6 border-t-4 border-black border-dashed\"><label class=\"block font-black uppercase text-red-600 mb-2\">Nuova Password</label> <input type=\"password\" name=\"password\" placeholder=\"Scrivi per cambiare...\" class=\"w-full border-4 border-black p-3 font-bold bg-gray-50 focus:bg-yellow-200 outline-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-colors\"></div><button type=\"submit\" class=\"mt-4 bg-black text-white font-black uppercase text-lg py-4 border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-y-1 hover:translate-x-1 hover:shadow-none hover:bg-green-400 hover:text-black transition-all\">Salva Modifiche</button></form></div></div></div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

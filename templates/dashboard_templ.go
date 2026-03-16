@@ -8,7 +8,12 @@ package templates
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-func Dashboard() templ.Component {
+import (
+	"github.com/yeddaTech/TaskManager/internals/models"
+	"strconv" // AGGIUNTO
+)
+
+func Dashboard(tasks []models.Task) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -41,13 +46,131 @@ func Dashboard() templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12\"><div class=\"flex flex-col md:flex-row justify-between items-start md:items-center mb-12 border-b-4 border-black pb-8\"><div><h1 class=\"text-5xl font-black uppercase tracking-tight text-black\">Area Operativa</h1><p class=\"text-xl font-medium text-gray-800 mt-2\">Bentornato, Boss. Hai <span class=\"inline-block bg-yellow-300 border-2 border-black px-2 font-bold -rotate-1\">3 task</span> in scadenza oggi.</p></div><button class=\"mt-6 md:mt-0 bg-black text-white font-bold text-lg py-3 px-8 border-2 border-black hover:bg-transparent hover:text-black transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-y-1 hover:translate-x-1 hover:shadow-[0px_0px_0px_0px_rgba(0,0,0,1)]\">+ NUOVO TASK</button></div><div class=\"grid grid-cols-1 md:grid-cols-3 gap-8\"><div class=\"flex flex-col gap-5\"><div class=\"bg-pink-400 border-2 border-black py-3 px-4 font-black text-xl uppercase shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex justify-between items-center\"><span>🔥 Da Fare</span> <span class=\"bg-white border-2 border-black rounded-full px-3 py-0.5 text-sm\">2</span></div><div class=\"bg-white border-2 border-black p-5 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all cursor-pointer\"><div class=\"flex justify-between items-start mb-3\"><span class=\"text-xs font-bold uppercase bg-gray-100 border-2 border-black px-2 py-1\">Lavoro</span> <span class=\"text-xs font-black uppercase text-red-600 border-b-2 border-red-600\">Scade Oggi</span></div><h3 class=\"text-xl font-black leading-tight mb-2 uppercase\">Finire il backend in Go</h3><p class=\"text-sm font-medium text-gray-700\">Collegare il database SQLite e preparare le API per le colonne della board.</p></div><div class=\"bg-white border-2 border-black p-5 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all cursor-pointer\"><div class=\"flex justify-between items-start mb-3\"><span class=\"text-xs font-bold uppercase bg-gray-100 border-2 border-black px-2 py-1\">Personale</span> <span class=\"text-xs font-bold uppercase text-gray-500\">Domani</span></div><h3 class=\"text-xl font-black leading-tight mb-2 uppercase\">Fare la spesa</h3><p class=\"text-sm font-medium text-gray-700\">Comprare latte, uova e tanta pazienza per fixare i bug.</p></div></div><div class=\"flex flex-col gap-5\"><div class=\"bg-yellow-300 border-2 border-black py-3 px-4 font-black text-xl uppercase shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex justify-between items-center\"><span>⚡ In Corso</span> <span class=\"bg-white border-2 border-black rounded-full px-3 py-0.5 text-sm\">1</span></div><div class=\"bg-white border-2 border-black p-5 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all cursor-pointer\"><div class=\"flex justify-between items-start mb-3\"><span class=\"text-xs font-bold uppercase bg-blue-100 border-2 border-black px-2 py-1\">Design</span> <span class=\"text-xs font-black uppercase text-orange-500\">In lavorazione</span></div><h3 class=\"text-xl font-black leading-tight mb-2 uppercase\">Stilizzare la Dashboard</h3><p class=\"text-sm font-medium text-gray-700\">Aggiungere ombre brutaliste e bordi neri a tutto spiano. (Quasi finito!)</p></div></div><div class=\"flex flex-col gap-5\"><div class=\"bg-green-400 border-2 border-black py-3 px-4 font-black text-xl uppercase shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex justify-between items-center opacity-80\"><span>✅ Fatti</span> <span class=\"bg-white border-2 border-black rounded-full px-3 py-0.5 text-sm\">1</span></div><div class=\"bg-gray-100 border-2 border-black p-5 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] opacity-70 cursor-pointer\"><div class=\"flex items-center gap-3 mb-2\"><div class=\"w-6 h-6 bg-black border-2 border-black flex items-center justify-center\"><svg class=\"w-4 h-4 text-white\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"3\" d=\"M5 13l4 4L19 7\"></path></svg></div><h3 class=\"text-xl font-black leading-tight uppercase line-through text-gray-500\">Landing Page</h3></div></div></div></div></div>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12\"><div class=\"flex flex-col md:flex-row justify-between items-start md:items-center mb-12 border-b-4 border-black pb-8\"><div><h1 class=\"text-5xl font-black uppercase tracking-tight text-black\">Area Operativa</h1><p class=\"text-xl font-medium text-gray-800 mt-2\">Bentornato. Hai  <span class=\"inline-block bg-yellow-300 border-2 border-black px-2 font-bold -rotate-1\">")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var3 string
+			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(strconv.Itoa(len(tasks)))
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/dashboard.templ`, Line: 19, Col: 54}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, " task</span> totali.</p></div><a href=\"/tasks/new\" class=\"mt-6 md:mt-0 bg-black text-white font-bold text-lg py-3 px-8 border-2 border-black hover:bg-transparent hover:text-black transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-y-1 hover:translate-x-1 hover:shadow-none\">+ NUOVO TASK</a></div><div class=\"grid grid-cols-1 md:grid-cols-3 gap-8\"><div class=\"flex flex-col gap-5\"><div class=\"bg-pink-400 border-2 border-black py-3 px-4 font-black text-xl uppercase shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex justify-between items-center\"><span>🔥 Da Fare</span></div>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			for _, task := range tasks {
+				if task.Status == "pending" {
+					templ_7745c5c3_Err = taskCard(task).Render(ctx, templ_7745c5c3_Buffer)
+					if templ_7745c5c3_Err != nil {
+						return templ_7745c5c3_Err
+					}
+				}
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</div><div class=\"flex flex-col gap-5\"><div class=\"bg-yellow-300 border-2 border-black py-3 px-4 font-black text-xl uppercase shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex justify-between items-center\"><span>⚡ In Corso</span></div>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			for _, task := range tasks {
+				if task.Status == "doing" {
+					templ_7745c5c3_Err = taskCard(task).Render(ctx, templ_7745c5c3_Buffer)
+					if templ_7745c5c3_Err != nil {
+						return templ_7745c5c3_Err
+					}
+				}
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</div><div class=\"flex flex-col gap-5\"><div class=\"bg-green-400 border-2 border-black py-3 px-4 font-black text-xl uppercase shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex justify-between items-center\"><span>✅ Fatti</span></div>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			for _, task := range tasks {
+				if task.Status == "completed" {
+					templ_7745c5c3_Err = taskCard(task).Render(ctx, templ_7745c5c3_Buffer)
+					if templ_7745c5c3_Err != nil {
+						return templ_7745c5c3_Err
+					}
+				}
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</div></div></div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			return nil
 		})
 		templ_7745c5c3_Err = Layout("Dashboard - Task Manager").Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		return nil
+	})
+}
+
+// Helper per non ripetere il codice della card 3 volte
+func taskCard(task models.Task) templ.Component {
+	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
+		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
+		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
+			return templ_7745c5c3_CtxErr
+		}
+		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
+		if !templ_7745c5c3_IsBuffer {
+			defer func() {
+				templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
+				if templ_7745c5c3_Err == nil {
+					templ_7745c5c3_Err = templ_7745c5c3_BufErr
+				}
+			}()
+		}
+		ctx = templ.InitializeContext(ctx)
+		templ_7745c5c3_Var4 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var4 == nil {
+			templ_7745c5c3_Var4 = templ.NopComponent
+		}
+		ctx = templ.ClearChildren(ctx)
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<div class=\"bg-white border-2 border-black p-5 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-1 transition-all\"><div class=\"flex justify-between items-start mb-3\"><span class=\"text-xs font-black uppercase text-red-600 border-b-2 border-red-600\">Scade: ")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var5 string
+		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(task.Deadline.Format("02/01"))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/dashboard.templ`, Line: 77, Col: 54}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "</span></div><h3 class=\"text-xl font-black leading-tight mb-2 uppercase\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var6 string
+		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(task.Title)
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/dashboard.templ`, Line: 80, Col: 80}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "</h3><p class=\"text-sm font-medium text-gray-700\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var7 string
+		templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(task.Description)
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/dashboard.templ`, Line: 81, Col: 71}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "</p><a href=\"/work\" class=\"mt-4 inline-block underline font-black\">FOCUS MODE →</a></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

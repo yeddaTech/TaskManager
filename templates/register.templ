@@ -7,20 +7,20 @@ templ Register() {
                 <h1 class="text-4xl font-black uppercase mb-2 text-center">Unisciti</h1>
                 <p class="text-center font-bold text-gray-800 mb-8">Niente scuse, solo task completati.</p>
                 
-                <form class="flex flex-col gap-5">
+                <form action="/register" method="POST" class="flex flex-col gap-5">
                     <div>
                         <label class="block text-sm font-black uppercase mb-2">Nome</label>
-                        <input type="text" class="w-full border-4 border-black p-3 font-bold focus:outline-none focus:bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-colors" placeholder="Tony Wayne" />
+                        <input type="text" name="username" class="w-full border-4 border-black p-3 font-bold focus:outline-none focus:bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-colors" placeholder="Tony Wayne" required />
                     </div>
                     <div>
                         <label class="block text-sm font-black uppercase mb-2">Email</label>
-                        <input type="email" class="w-full border-4 border-black p-3 font-bold focus:outline-none focus:bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-colors" placeholder="tony@wayne.com" />
+                        <input type="email" name="email" class="w-full border-4 border-black p-3 font-bold focus:outline-none focus:bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-colors" placeholder="tony@wayne.com" required />
                     </div>
                     <div>
                         <label class="block text-sm font-black uppercase mb-2">Password</label>
-                        <input type="password" class="w-full border-4 border-black p-3 font-bold focus:outline-none focus:bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-colors" placeholder="********" />
+                        <input type="password" name="password" class="w-full border-4 border-black p-3 font-bold focus:outline-none focus:bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-colors" placeholder="********" required />
                     </div>
-                    <button type="button" class="mt-4 bg-white text-black font-black uppercase text-xl py-4 border-4 border-black hover:bg-black hover:text-white transition-all shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-y-1 hover:translate-x-1 hover:shadow-none">
+                    <button type="submit" class="mt-4 bg-white text-black font-black uppercase text-xl py-4 border-4 border-black hover:bg-black hover:text-white transition-all shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-y-1 hover:translate-x-1 hover:shadow-none">
                         Crea Account
                     </button>
                 </form>

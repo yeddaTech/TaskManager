@@ -8,7 +8,7 @@ package templates
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-func Login() templ.Component {
+func NewTask() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -41,13 +41,13 @@ func Login() templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"min-h-[75vh] flex items-center justify-center px-4 py-12\"><div class=\"bg-white border-4 border-black p-8 w-full max-w-md shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]\"><h1 class=\"text-4xl font-black uppercase mb-2 text-center\">Bentornato</h1><p class=\"text-center font-bold text-gray-600 mb-8\">Pronto a spaccare tutto?</p><form action=\"/login\" method=\"POST\" class=\"flex flex-col gap-6\"><div><label class=\"block text-sm font-black uppercase mb-2\">Email</label> <input type=\"email\" name=\"email\" required class=\"w-full border-4 border-black p-3 font-bold focus:outline-none focus:bg-yellow-200 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-colors\" placeholder=\"boss@azienda.com\"></div><div><label class=\"block text-sm font-black uppercase mb-2\">Password</label> <input type=\"password\" name=\"password\" required class=\"w-full border-4 border-black p-3 font-bold focus:outline-none focus:bg-yellow-200 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-colors\" placeholder=\"********\"></div><button type=\"submit\" class=\"mt-4 bg-black text-white font-black uppercase text-xl py-4 border-4 border-black hover:bg-transparent hover:text-black transition-all shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-y-1 hover:translate-x-1 hover:shadow-none\">Entra</button></form><p class=\"mt-8 text-center font-bold text-sm\">Non hai un account? <a href=\"/register\" class=\"text-blue-600 underline decoration-4 underline-offset-4 hover:text-black transition-colors\">Registrati</a></p></div></div>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"max-w-2xl mx-auto px-4 py-12\"><div class=\"bg-white border-4 border-black p-8 shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]\"><h1 class=\"text-4xl font-black uppercase mb-8 border-b-4 border-black pb-2\">Crea Missione</h1><form action=\"/tasks\" method=\"POST\" class=\"flex flex-col gap-6\"><div><label class=\"block font-black uppercase mb-2\">Cosa devi fare?</label> <input type=\"text\" name=\"title\" required class=\"w-full border-4 border-black p-3 font-bold focus:bg-yellow-200 outline-none\" placeholder=\"Es: Finire il backend\"></div><div><label class=\"block font-black uppercase mb-2\">Dettagli (opzionale)</label> <textarea name=\"description\" class=\"w-full border-4 border-black p-3 font-bold focus:bg-yellow-200 outline-none\" rows=\"3\"></textarea></div><div><label class=\"block font-black uppercase mb-2\">Entro quando? (Deadline)</label> <input type=\"date\" name=\"deadline\" required class=\"w-full border-4 border-black p-3 font-bold focus:bg-yellow-200 outline-none\"></div><button type=\"submit\" class=\"bg-green-400 text-black font-black uppercase py-4 border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-y-1 hover:translate-x-1 hover:shadow-none transition-all\">Salva Task</button></form></div></div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			return nil
 		})
-		templ_7745c5c3_Err = Layout("Accedi - Task Manager").Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = Layout("Nuovo Task - Task Manager").Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

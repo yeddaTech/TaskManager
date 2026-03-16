@@ -1,22 +1,36 @@
 package templates
 
-templ Work() {
+import "github.com/yeddaTech/TaskManager/internals/models"
+
+templ Work(task models.Task) {
     @Layout("Work - Task Manager") {
         <div class="max-w-4xl mx-auto px-4 py-12">
             <h1 class="text-5xl font-black uppercase border-b-8 border-black pb-4 mb-12">Focus Mode</h1>
             
             <div class="bg-cyan-300 border-4 border-black p-8 md:p-16 shadow-[16px_16px_0px_0px_rgba(0,0,0,1)] text-center mb-12">
                 <div class="inline-block bg-black text-white px-4 py-1 font-bold uppercase mb-6 -rotate-2 border-2 border-black">Task in corso</div>
-                <h2 class="text-3xl md:text-5xl font-black uppercase mb-10 leading-tight">Finire il backend in Go</h2>
                 
-                // Il Timer Brutalista
+                // USIAMO IL TITOLO REALE DAL DB
+                <h2 class="text-3xl md:text-5xl font-black uppercase mb-10 leading-tight">
+                    { task.Title }
+                </h2>
+                
+                // Mostriamo la scadenza
+                <p class="font-black uppercase mb-4 text-xl italic">
+                    Scade il: { task.Deadline.Format("02/01/2006") }
+                </p>
+                
                 <div class="text-7xl md:text-9xl font-black tracking-tighter bg-white border-8 border-black inline-block px-8 py-4 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] mb-12">
                     25:00
                 </div>
                 
                 <div class="flex flex-col sm:flex-row justify-center gap-6">
                     <button class="bg-black text-white font-black uppercase text-2xl py-4 px-12 border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-y-1 hover:translate-x-1 hover:shadow-none hover:bg-green-400 hover:text-black transition-all">START</button>
-                    <button class="bg-white text-black font-black uppercase text-2xl py-4 px-12 border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-y-1 hover:translate-x-1 hover:shadow-none transition-all">PAUSA</button>
+                    
+                    // Un tasto per completare il task e rimuoverlo/cambiare stato
+                    <form action={ templ.SafeURL("/tasks/complete/" + string(rune(task.ID))) } method="POST">
+                        <button type="submit" class="bg-white text-black font-black uppercase text-2xl py-4 px-12 border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-y-1 hover:translate-x-1 hover:shadow-none transition-all">FINITO</button>
+                    </form>
                 </div>
             </div>
         </div>
