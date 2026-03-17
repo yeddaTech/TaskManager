@@ -54,10 +54,30 @@ templ Layout(title string, isLoggedIn bool) {
                 clickSound.preload = 'auto';
 
                 document.addEventListener('click', (e) => {
-                    if (e.target.closest('button') || e.target.closest('a')) {
+                    const target = e.target.closest('button') || e.target.closest('a');
+                    
+                    if (target) {
                         let soundClone = clickSound.cloneNode();
-                        soundClone.volume = 0.4; // Puoi alzarlo a 1.0 se lo senti basso
-                        soundClone.play().catch(() => {}); 
+                        soundClone.volume = 0.5;
+                        soundClone.play().catch(() => {});
+
+                        // TRUCCO: Se è un link (A) o un pulsante di un form (SUBMIT)
+                        // Fermiamo il tempo per 0.15 secondi per farti godere il suono!
+                        
+                        if (target.tagName === 'A' && target.href && target.target !== '_blank') {
+                            e.preventDefault(); // Blocca il cambio pagina
+                            setTimeout(() => {
+                                window.location.href = target.href; // Cambia pagina dopo 150ms
+                            }, 150);
+                        } else if (target.tagName === 'BUTTON' && target.type === 'submit') {
+                            const form = target.closest('form');
+                            if (form) {
+                                e.preventDefault(); // Blocca l'invio del form
+                                setTimeout(() => {
+                                    form.submit(); // Invia il form dopo 150ms
+                                }, 150);
+                            }
+                        }
                     }
                 });
             });
