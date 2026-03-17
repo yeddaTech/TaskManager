@@ -41,22 +41,30 @@ func PostCompleteTask(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
 }
 
-// Prende i task per la Dashboard
+// Prende i task per la Dashboard (e fa pulizia automatica)
 func GetTasksFromDB(r *http.Request) []models.Task {
 	cookie, err := r.Cookie("user_id")
 	if err != nil {
 		return nil
 	}
 
-	// La nuova query filtrata
-	query := `
+	// 1. IL BOIA: Elimina fisicamente i task completati la cui scadenza è passata
+	// CURRENT_DATE è oggi. "< CURRENT_DATE" significa da ieri in giù.
+	deleteQuery := `
+        DELETE FROM tasks 
+        WHERE user_id = $1 
+        AND status = 'completed' 
+        AND deadline < CURRENT_DATE
+    `
+	_, _ = db.Pool.Exec(r.Context(), deleteQuery, cookie.Value)
+
+	// 2. SELEZIONE GENUINA: Ora peschiamo esattamente quello che è rimasto, senza filtri strani
+	selectQuery := `
         SELECT id, title, description, status, deadline 
         FROM tasks 
-        WHERE user_id = $1 
-        AND (status != 'completed' OR deadline >= CURRENT_DATE)
+        WHERE user_id = $1
     `
-
-	rows, err := db.Pool.Query(r.Context(), query, cookie.Value)
+	rows, err := db.Pool.Query(r.Context(), selectQuery, cookie.Value)
 	if err != nil {
 		return nil
 	}
