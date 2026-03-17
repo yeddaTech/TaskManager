@@ -48,6 +48,20 @@ templ Layout(title string, isLoggedIn bool) {
         <main class="min-h-screen">
             { children... }
         </main>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const clickSound = new Audio('/public/click.mp3');
+                clickSound.preload = 'auto';
+
+                document.addEventListener('click', (e) => {
+                    if (e.target.closest('button') || e.target.closest('a')) {
+                        let soundClone = clickSound.cloneNode();
+                        soundClone.volume = 0.4; // Puoi alzarlo a 1.0 se lo senti basso
+                        soundClone.play().catch(() => {}); 
+                    }
+                });
+            });
+        </script>
     </body>
     </html>
 }

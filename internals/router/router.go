@@ -10,6 +10,8 @@ import (
 
 func New() *chi.Mux {
 	r := chi.NewRouter()
+	fileServer := http.FileServer(http.Dir("./public"))
+	r.Handle("/public/*", http.StripPrefix("/public/", fileServer))
 
 	// Helper per controllare se l'utente è loggato (per il Layout)
 	isLogged := func(r *http.Request) bool {

@@ -66,7 +66,7 @@ func Layout(title string, isLoggedIn bool) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</main></body></html>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</main><script>\n            document.addEventListener('DOMContentLoaded', () => {\n                const clickSound = new Audio('/public/click.mp3');\n                clickSound.preload = 'auto';\n\n                document.addEventListener('click', (e) => {\n                    if (e.target.closest('button') || e.target.closest('a')) {\n                        let soundClone = clickSound.cloneNode();\n                        soundClone.volume = 0.4; // Puoi alzarlo a 1.0 se lo senti basso\n                        soundClone.play().catch(() => {}); \n                    }\n                });\n            });\n        </script></body></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
