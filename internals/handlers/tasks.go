@@ -48,7 +48,15 @@ func GetTasksFromDB(r *http.Request) []models.Task {
 		return nil
 	}
 
-	rows, err := db.Pool.Query(r.Context(), "SELECT id, title, description, status, deadline FROM tasks WHERE user_id = $1", cookie.Value)
+	// La nuova query filtrata
+	query := `
+        SELECT id, title, description, status, deadline 
+        FROM tasks 
+        WHERE user_id = $1 
+        AND (status != 'completed' OR deadline >= CURRENT_DATE)
+    `
+
+	rows, err := db.Pool.Query(r.Context(), query, cookie.Value)
 	if err != nil {
 		return nil
 	}
